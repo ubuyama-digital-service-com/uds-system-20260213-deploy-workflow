@@ -1,0 +1,21 @@
+name: Deploy to Onamae.com
+
+on:
+  push:
+    branches:
+      - main  # mainブランチにPushされたら実行
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.ONAMAE_FTP_SERVER }}
+          username: ${{ secrets.ONAMAE_FTP_USERNAME }}
+          password: ${{ secrets.ONAMAE_FTP_PASSWORD }}
+          server-dir: /  # サーバー上のアップロード先ディレクトリ
